@@ -9,11 +9,13 @@ namespace MotorSimulation
   class MotorMoveDoneEventArgs : EventArgs
   {
     public readonly int GoalPosition;
-    public readonly int CurrentPosition;
-    public MotorMoveDoneEventArgs( int currentPosition, int goalPosition )
+    public int CurrentPosition;
+    public readonly string ID;
+    public MotorMoveDoneEventArgs( string id, int currentPosition, int goalPosition )
     {
       GoalPosition = goalPosition;
       CurrentPosition = currentPosition;
+      ID = id;
     }
   }
 }

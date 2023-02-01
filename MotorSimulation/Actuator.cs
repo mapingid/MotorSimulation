@@ -8,27 +8,42 @@ namespace MotorSimulation
 {
   class Actuator
   {
-    // DEFINE EVENT
-    public static event EventHandler<MotorMoveDoneEventArgs> MotorMoveDone;
-    protected virtual void OnMoveDone( MotorMoveDoneEventArgs e )
+    //EVENT
+    public event EventHandler<MotorMoveDoneEventArgs> MotorMoveDone;
+    public virtual void OnMoveDone( MotorMoveDoneEventArgs e )
     {
       MotorMoveDone?.Invoke( this, e );
     }
-    public static void AddEventMoveDone( EventHandler<MotorMoveDoneEventArgs> e )
+    public void AddEventMoveDone( EventHandler<MotorMoveDoneEventArgs> e )
     {
       MotorMoveDone += e;
     }
 
     // MAIN
-    IMotor _motor;
-    public Actuator(IMotor motor)
+    IMotor Motor;
+    string ID;
+    public Actuator( string id, IMotor motor )
     {
-      _motor = motor;
+      Motor = motor;
+      ID = id;
+      AddEventMoveDone( Motor.MoveDoneHandler ); //ini taruh actuator
     }
     public void Move( int goalPosition )
     {
-      int position = _motor.Move( goalPosition );
-      OnMoveDone( new MotorMoveDoneEventArgs( position, goalPosition ) );
+      int position = 0;
+
+      var args = new MotorMoveDoneEventArgs( ID, position, goalPosition );
+
+      while( ( goalPosition - position ) != 0 )
+      {
+        if( position > goalPosition )  Motor.MoveCCW( ref position ); 
+        else if( position < goalPosition )  Motor.MoveCW( ref position ); 
+
+        args.CurrentPosition = position;
+        OnMoveDone( args );
+      }
     }
+
+
   }
 }
