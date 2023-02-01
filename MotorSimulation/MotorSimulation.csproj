@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actuator.cs" />
+    <Compile Include="IMotor.cs" />
+    <Compile Include="Motor.cs" />
+    <Compile Include="MotorMoveDoneEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
