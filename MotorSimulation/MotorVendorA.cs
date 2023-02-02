@@ -9,11 +9,11 @@ namespace MotorSimulation
 {
   class MotorVendorA : IMotor
   {
-    //EVENT
+    //EVENT HANDLER
     public void MoveDoneHandler( object sender, MotorMoveDoneEventArgs e )
     {
-      Console.WriteLine( $"MOVE {e.ID} {e.CurrentPosition}/{e.GoalPosition}" );
-      if( e.CurrentPosition - e.GoalPosition == 0 ) Console.WriteLine( $"MOVE {e.ID} DONE" );
+      Console.WriteLine( $"MOVE {e.ID} {e.CurrentPosition}/{e.GoalPosition}" ); // MOVE
+      if( e.CurrentPosition - e.GoalPosition == 0 ) Console.WriteLine( $"MOVE {e.ID} DONE" ); //DONE
     }
 
     // MAIN

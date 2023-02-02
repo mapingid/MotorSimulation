@@ -28,18 +28,17 @@ namespace MotorSimulation
       ID = id;
       AddEventMoveDone( Motor.MoveDoneHandler ); //ini taruh actuator
     }
+    int Position = 0;
     public void Move( int goalPosition )
     {
-      int position = 0;
+      var args = new MotorMoveDoneEventArgs( ID, Position, goalPosition );
 
-      var args = new MotorMoveDoneEventArgs( ID, position, goalPosition );
-
-      while( ( goalPosition - position ) != 0 )
+      while( ( goalPosition - Position ) != 0 )
       {
-        if( position > goalPosition )  Motor.MoveCCW( ref position ); 
-        else if( position < goalPosition )  Motor.MoveCW( ref position ); 
+        if( Position > goalPosition )  Motor.MoveCCW( ref Position ); 
+        else if( Position < goalPosition )  Motor.MoveCW( ref Position ); 
 
-        args.CurrentPosition = position;
+        args.CurrentPosition = Position;
         OnMoveDone( args );
       }
     }
