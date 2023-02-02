@@ -26,14 +26,16 @@ namespace MotorSimulation
     int MaxPosition;
     int MinPosition;
     string ID;
+    int Speed;
     MotorMoveDoneEventArgs MoveDoneArgs = new MotorMoveDoneEventArgs();
     MotorMoveEventArgs MoveArgs = new MotorMoveEventArgs();
 
-    public MotorVendorA( string id, int minPosition, int maxPosition )
+    public MotorVendorA( string id,int speed, int minPosition, int maxPosition )
     {
       ID = id;
       MaxPosition = maxPosition;
       MinPosition = minPosition;
+      Speed = speed;
       MoveDoneArgs.ID = ID;
       MoveArgs.ID = ID;
     }
@@ -73,7 +75,7 @@ namespace MotorSimulation
         MoveArgs.Position = CurrentPosition;
         OnMove( MoveArgs );
 
-        Thread.Sleep( 300 );
+        Thread.Sleep( Speed );
         MaxStep--;
 
       }

@@ -11,16 +11,19 @@ namespace MotorSimulation
     //EVENT
     private void MoveDoneCallback( object sender, MotorMoveDoneEventArgs e )
     {
-      Console.WriteLine( $"ID: {e.ID} MOVE DONE {e.Position} CODE : {(MotorErrorCode)e.Status}" );
+      Console.WriteLine( $"{GetTimestamp( DateTime.Now )}   ID: {e.ID} MOVE DONE {e.Position} CODE : {(MotorErrorCode)e.Status}" );
     }
     private void MoveCallback( object sender, MotorMoveEventArgs e )
     {
-      Console.WriteLine( $"ID: {e.ID} MOVE {e.Position}/{e.Goal}" );
+      Console.WriteLine( $"{GetTimestamp( DateTime.Now )}   ID: {e.ID} MOVE {e.Position}/{e.Goal}" );
     }
 
     // MAIN
     IMotor Motor;
-
+    public static String GetTimestamp( DateTime value )
+    {
+      return value.ToString( "mm:ss:fff" );
+    }
     public Actuator(IMotor motor )
     {
       Motor = motor;
