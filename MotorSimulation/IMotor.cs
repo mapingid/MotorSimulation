@@ -12,6 +12,15 @@ namespace MotorSimulation
     event EventHandler<MotorMoveDoneEventArgs> MotorMoveDone;
     void AddEventMoveDone( EventHandler<MotorMoveDoneEventArgs> e );
     void OnMoveDone( MotorMoveDoneEventArgs args );
+
+
+    event EventHandler<MotorMoveEventArgs> MotorMove;
+    void AddEventMove( EventHandler<MotorMoveEventArgs> e );
+    void OnMove( MotorMoveEventArgs args );
+    
+    
+    
+    
     void Move( int goalPosition );
   }
 }

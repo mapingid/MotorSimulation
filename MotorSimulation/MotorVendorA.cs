@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* TODO
+ * RAISE EVENT MOVE
+ * RAISE EVENT ERROR
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,52 +12,56 @@ using System.Threading;
 
 namespace MotorSimulation
 {
-  class MotorVendorA : IMotor
+  enum MotorErrorCode
   {
-    //EVENT HANDLER
-    public event EventHandler<MotorMoveDoneEventArgs> MotorMoveDone;
-    public virtual void OnMoveDone( MotorMoveDoneEventArgs e )
-    {
-      MotorMoveDone?.Invoke( this, e );
-    }
-    public void AddEventMoveDone( EventHandler<MotorMoveDoneEventArgs> e )
-    {
-      MotorMoveDone += e;
-    }
+    NoError = 0,
+    NotReachTarget = 1,
+    MaximumPosition = 2,
+    MinimumPosition = 3
+  }
 
-    // MAIN
-    int CurrentPosition = 0; 
+  partial class MotorVendorA : IMotor
+  {
+    int CurrentPosition = 0;
     int MaxPosition;
     int MinPosition;
     string ID;
+    MotorMoveDoneEventArgs MoveDoneArgs = new MotorMoveDoneEventArgs();
+    MotorMoveEventArgs MoveArgs = new MotorMoveEventArgs();
 
-    public MotorVendorA(string id, int maxPosition, int minPosition)
+    public MotorVendorA( string id, int minPosition, int maxPosition )
     {
       ID = id;
       MaxPosition = maxPosition;
       MinPosition = minPosition;
+      MoveDoneArgs.ID = ID;
+      MoveArgs.ID = ID;
     }
-    public MotorVendorA( string id )
-    {
-      ID = id;
-      MaxPosition = 10;
-      MinPosition = 0;
-    }
-
+    
     public void Move( int goalPosition )
     {
-      var args = new MotorMoveDoneEventArgs( ID, CurrentPosition, goalPosition );
-      while( ( goalPosition - CurrentPosition ) != 0 )
-      {
+      int MaxStep = Math.Abs( goalPosition - CurrentPosition );
+      MoveArgs.Goal = goalPosition;
+
+
+      while( MaxStep > 0 )
+      {       
         if( goalPosition > CurrentPosition ) { CurrentPosition++; }
         else if( goalPosition < CurrentPosition ) { CurrentPosition--; }
-        Thread.Sleep( 300 );
 
-        args.CurrentPosition = CurrentPosition;
-        OnMoveDone( args );
+        MoveArgs.Position = CurrentPosition;
+        OnMove( MoveArgs );
+        
+        Thread.Sleep( 300 );
+        
+        MaxStep--;
       }
 
+      MoveDoneArgs.Position = CurrentPosition;
+      if( CurrentPosition - goalPosition == 0 ) { MoveDoneArgs.Status = (int)MotorErrorCode.NoError; }
+      else if( CurrentPosition - goalPosition != 0 ) { MoveDoneArgs.Status = (int)MotorErrorCode.NotReachTarget; ; }
 
+      OnMoveDone( MoveDoneArgs );
     }
 
   }

@@ -44,9 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actuator.cs" />
+    <Compile Include="Actuator3Axis.cs" />
     <Compile Include="IMotor.cs" />
+    <Compile Include="MotorMoveEventArgs.cs" />
     <Compile Include="MotorVendorA.cs" />
     <Compile Include="MotorMoveDoneEventArgs.cs" />
+    <Compile Include="MotorVendorAEventHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

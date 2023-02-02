@@ -9,22 +9,25 @@ namespace MotorSimulation
   class Actuator
   {
     //EVENT
-    public void MoveDoneCallback( object sender, MotorMoveDoneEventArgs e )
+    private void MoveDoneCallback( object sender, MotorMoveDoneEventArgs e )
     {
-      Console.WriteLine( $"MOVE {e.ID} {e.CurrentPosition}/{e.GoalPosition}" ); // MOVE
-      if( e.CurrentPosition - e.GoalPosition == 0 ) Console.WriteLine( $"MOVE {e.ID} DONE" ); //DONE
+      Console.WriteLine( $"ID: {e.ID} MOVE DONE {e.Position} CODE : {(MotorErrorCode)e.Status}" );
+    }
+    private void MoveCallback( object sender, MotorMoveEventArgs e )
+    {
+      Console.WriteLine( $"ID: {e.ID} MOVE {e.Position}/{e.Goal}" );
     }
 
     // MAIN
     IMotor Motor;
-    IMotor MotorX, MotorY, MotorZ;
 
     public Actuator(IMotor motor )
     {
       Motor = motor;
-      Motor.AddEventMoveDone( MoveDoneCallback ); 
+      Motor.AddEventMoveDone( MoveDoneCallback );
+      Motor.AddEventMove( MoveCallback );
     }
-    
+
     public void Move( int goalPosition )
     {
       Motor.Move( goalPosition );

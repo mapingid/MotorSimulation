@@ -1,11 +1,4 @@
-﻿/* TODO
- * BUG WHEN RUNNING SAME ACTUATOR IN DIFFERENT THREAD
- * 
- * 
- */
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,13 +12,19 @@ namespace MotorSimulation
   {
     static void Main( string[] args )
     {
-      var actuator1 = new Actuator( new MotorVendorA("A") );
+      
+      
+      var actuator1 = new Actuator( new MotorVendorA("Single", 0, 10 ) );
       actuator1.Move( 3 );
-    
-      //Thread tread1 = new Thread( () => actuator1.Move( 10 ) );
-      //Thread tread2 = new Thread( () => actuator1.Move( 20 ) );
-      //tread1.Start();
-      //tread2.Start();
+      actuator1.Move( 5 );
+      
+
+      
+      var actuator3axis = new Actuator3Axis( new MotorVendorA( "MotorX", 0, 10 ),
+                                             new MotorVendorA( "MotorY", 0, 10 ),
+                                             new MotorVendorA( "MotorZ", 0, 10 ) );
+      actuator3axis.Move( 5, 15, 25 );
+      
 
       Console.Read();
     }

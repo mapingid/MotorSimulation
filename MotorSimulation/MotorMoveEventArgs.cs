@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace MotorSimulation
 {
-  class MotorMoveDoneEventArgs : EventArgs
+  class MotorMoveEventArgs : EventArgs
   {
-    public ushort Status;
+    public int Goal;
     public int Position;
     public string ID;
-
     /*
-    public MotorMoveDoneEventArgs( string id, int position, ushort status )
+    public MotorMoveEventArgs( string id, int position, int goal )
     {
-      Status = status;
+      Goal = goal;
       Position = position;
       ID = id;
     }
