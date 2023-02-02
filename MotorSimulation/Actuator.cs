@@ -9,38 +9,25 @@ namespace MotorSimulation
   class Actuator
   {
     //EVENT
-    public event EventHandler<MotorMoveDoneEventArgs> MotorMoveDone;
-    public virtual void OnMoveDone( MotorMoveDoneEventArgs e )
+    public void MoveDoneCallback( object sender, MotorMoveDoneEventArgs e )
     {
-      MotorMoveDone?.Invoke( this, e );
-    }
-    public void AddEventMoveDone( EventHandler<MotorMoveDoneEventArgs> e )
-    {
-      MotorMoveDone += e;
+      Console.WriteLine( $"MOVE {e.ID} {e.CurrentPosition}/{e.GoalPosition}" ); // MOVE
+      if( e.CurrentPosition - e.GoalPosition == 0 ) Console.WriteLine( $"MOVE {e.ID} DONE" ); //DONE
     }
 
     // MAIN
     IMotor Motor;
-    string ID;
-    public Actuator( string id, IMotor motor )
+    IMotor MotorX, MotorY, MotorZ;
+
+    public Actuator(IMotor motor )
     {
       Motor = motor;
-      ID = id;
-      AddEventMoveDone( Motor.MoveDoneHandler ); //ini taruh actuator
+      Motor.AddEventMoveDone( MoveDoneCallback ); 
     }
-    int Position = 0;
+    
     public void Move( int goalPosition )
     {
-      var args = new MotorMoveDoneEventArgs( ID, Position, goalPosition );
-
-      while( ( goalPosition - Position ) != 0 )
-      {
-        if( Position > goalPosition )  Motor.MoveCCW( ref Position ); 
-        else if( Position < goalPosition )  Motor.MoveCW( ref Position ); 
-
-        args.CurrentPosition = Position;
-        OnMoveDone( args );
-      }
+      Motor.Move( goalPosition );
     }
 
 

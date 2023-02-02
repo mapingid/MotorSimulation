@@ -8,9 +8,10 @@ namespace MotorSimulation
 {
   interface IMotor
   {
-    void MoveCW(ref int position);
-    void MoveCCW(ref int position );
-    void MoveDoneHandler( object sender, MotorMoveDoneEventArgs e );
-
+    
+    event EventHandler<MotorMoveDoneEventArgs> MotorMoveDone;
+    void AddEventMoveDone( EventHandler<MotorMoveDoneEventArgs> e );
+    void OnMoveDone( MotorMoveDoneEventArgs args );
+    void Move( int goalPosition );
   }
 }

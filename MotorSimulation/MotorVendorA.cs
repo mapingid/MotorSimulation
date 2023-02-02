@@ -10,24 +10,50 @@ namespace MotorSimulation
   class MotorVendorA : IMotor
   {
     //EVENT HANDLER
-    public void MoveDoneHandler( object sender, MotorMoveDoneEventArgs e )
+    public event EventHandler<MotorMoveDoneEventArgs> MotorMoveDone;
+    public virtual void OnMoveDone( MotorMoveDoneEventArgs e )
     {
-      Console.WriteLine( $"MOVE {e.ID} {e.CurrentPosition}/{e.GoalPosition}" ); // MOVE
-      if( e.CurrentPosition - e.GoalPosition == 0 ) Console.WriteLine( $"MOVE {e.ID} DONE" ); //DONE
+      MotorMoveDone?.Invoke( this, e );
+    }
+    public void AddEventMoveDone( EventHandler<MotorMoveDoneEventArgs> e )
+    {
+      MotorMoveDone += e;
     }
 
     // MAIN
-    public void MoveCW( ref int position)
+    int CurrentPosition = 0; 
+    int MaxPosition;
+    int MinPosition;
+    string ID;
+
+    public MotorVendorA(string id, int maxPosition, int minPosition)
     {
-      position++;
-      Thread.Sleep( 300 );
+      ID = id;
+      MaxPosition = maxPosition;
+      MinPosition = minPosition;
     }
-    public void MoveCCW(ref int position )
+    public MotorVendorA( string id )
     {
-      position--;
-      Thread.Sleep( 300 );
+      ID = id;
+      MaxPosition = 10;
+      MinPosition = 0;
     }
 
+    public void Move( int goalPosition )
+    {
+      var args = new MotorMoveDoneEventArgs( ID, CurrentPosition, goalPosition );
+      while( ( goalPosition - CurrentPosition ) != 0 )
+      {
+        if( goalPosition > CurrentPosition ) { CurrentPosition++; }
+        else if( goalPosition < CurrentPosition ) { CurrentPosition--; }
+        Thread.Sleep( 300 );
+
+        args.CurrentPosition = CurrentPosition;
+        OnMoveDone( args );
+      }
+
+
+    }
 
   }
 
