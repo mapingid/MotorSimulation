@@ -38,15 +38,13 @@ namespace MotorSimulation
     }
     public void Move( int x, int y, int z )
     {
-
       Thread thread1 = new Thread( () => MotorX.Move( x ) );
       Thread thread2 = new Thread( () => MotorY.Move( y ) );
       Thread thread3 = new Thread( () => MotorZ.Move( z ) );
 
       thread1.Start();
       thread2.Start();
-      thread3.Start();
-
+      thread3.Start(); //Task.WhenAll
     }
 
   }
