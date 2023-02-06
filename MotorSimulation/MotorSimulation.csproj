@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Actuator.cs" />
     <Compile Include="Actuator3Axis.cs" />
+    <Compile Include="DisposedClassTest.cs" />
     <Compile Include="IMotor.cs" />
     <Compile Include="MotorMoveEventArgs.cs" />
     <Compile Include="MotorVendorA.cs" />

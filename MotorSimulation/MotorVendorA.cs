@@ -1,9 +1,4 @@
-﻿/* TODO
- * RAISE EVENT MOVE
- * RAISE EVENT ERROR
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -77,9 +72,9 @@ namespace MotorSimulation
 
         Thread.Sleep( Speed );
         MaxStep--;
-
+        
       }
-
+      
       MoveDoneArgs.Position = CurrentPosition;
       if( CurrentPosition - goalPosition == 0 ) { MoveDoneArgs.Status = (int)MotorErrorCode.NoError; }
       else if( CurrentPosition == MaxPosition ) { MoveDoneArgs.Status = (int)MotorErrorCode.MaximumPosition; }
@@ -88,6 +83,8 @@ namespace MotorSimulation
 
       OnMoveDone( MoveDoneArgs );
     }
+
+    
 
   }
 

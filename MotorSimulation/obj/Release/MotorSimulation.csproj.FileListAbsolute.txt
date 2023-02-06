@@ -1,0 +1,7 @@
+D:\MotorSimulation\MotorSimulation\bin\Release\MotorSimulation.exe.config
+D:\MotorSimulation\MotorSimulation\bin\Release\MotorSimulation.exe
+D:\MotorSimulation\MotorSimulation\bin\Release\MotorSimulation.pdb
+D:\MotorSimulation\MotorSimulation\obj\Release\MotorSimulation.csproj.AssemblyReference.cache
+D:\MotorSimulation\MotorSimulation\obj\Release\MotorSimulation.csproj.CoreCompileInputs.cache
+D:\MotorSimulation\MotorSimulation\obj\Release\MotorSimulation.exe
+D:\MotorSimulation\MotorSimulation\obj\Release\MotorSimulation.pdb
