@@ -5,3 +5,4 @@ D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.csproj.AssemblyRefe
 D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.csproj.CoreCompileInputs.cache
 D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.exe
 D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.pdb
+D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.csproj.SuggestedBindingRedirects.cache

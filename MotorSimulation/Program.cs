@@ -26,20 +26,22 @@ namespace MotorSimulation
       //actuator1.Move( 8 );
       //actuator1.Move( 3 );
       //actuator1.Move( -1 );
-
-
       
-      var actuator3axis = new Actuator3Axis( new MotorVendorA( "MotorX", 100, 0, 10 ),
+      var actuator3axis = new Actuator3Axis( new MotorVendorA( "MotorX", 300, 0, 10 ),
                                              new MotorVendorA( "MotorY", 300, 0, 10 ),
-                                             new MotorVendorA( "MotorZ", 500, 0, 10 ) );
+                                             new MotorVendorA( "MotorZ", 300, 0, 10 ) );
+      //actuator3axis.MoveThread( 3, 3, 3 );
+      //actuator3axis.MoveThread( 7, 7, 7 );
+      //actuator3axis.MoveThread( 1, 1, 1 );
+
       //actuator3axis.MoveTask( 3, 3, 3 );
       //actuator3axis.MoveTask( 7, 7, 7 );
       //actuator3axis.MoveTask( 1, 1, 1 );
 
-      actuator3axis.MoveTaskWRetract( 5, 5, 0 );
-
-
-
+      // Ubah method main void ke async Task
+      //await actuator3axis.MoveAwaitAsync( 3, 3, 3 );
+      //await actuator3axis.MoveAwaitAsync( 7, 7, 7 );
+      //await actuator3axis.MoveAwaitAsync( 1, 1, 1 );
 
       Console.Read();
     }
