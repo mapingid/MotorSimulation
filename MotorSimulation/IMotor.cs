@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MotorSimulation
@@ -22,5 +23,6 @@ namespace MotorSimulation
     
     
     void Move( int goalPosition );
+    void MoveWCancellation(int goalPosition, CancellationToken token);
   }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
 
 namespace MotorSimulation
 {
@@ -12,51 +13,42 @@ namespace MotorSimulation
     //EVENT
     void MoveCallback( object sender, MotorMoveEventArgs e )
     {
-      Console.WriteLine( $"{GetTimestamp( DateTime.Now )}   ID: {e.ID} move {e.Position}/{e.Goal}" );
+      Console.WriteLine( $"{s.Elapsed}   ID: {e.ID} move {e.Position}/{e.Goal}" );
     }
     void MoveDoneCallback( object sender, MotorMoveDoneEventArgs e )
     {
-      Console.WriteLine( $"{GetTimestamp( DateTime.Now )}   ID: {e.ID} move DONE Code : {(MotorErrorCode)e.Status}" );
+      Console.WriteLine( $"{s.Elapsed}   ID: {e.ID} move DONE Code : {(MotorErrorCode)e.Status}" );
     }
-
-
     void MotorXMoveDoneCallback( object sender, MotorMoveDoneEventArgs e )
     {
-      Console.WriteLine( $"{GetTimestamp( DateTime.Now )}   ID: {e.ID} move DONE Code : {(MotorErrorCode)e.Status}" );
+      Console.WriteLine( $"{s.Elapsed}   ID: {e.ID} move DONE Code : {(MotorErrorCode)e.Status}" );
       MotorXDone = true;
 
       if( MotorXDone && MotorYDone && MotorZDone ) { _waitHandle.Set(); }
     }
     void MotorYMoveDoneCallback( object sender, MotorMoveDoneEventArgs e )
     {
-      Console.WriteLine( $"{GetTimestamp( DateTime.Now )}   ID: {e.ID} move DONE Code : {(MotorErrorCode)e.Status}" );
+      Console.WriteLine( $"{s.Elapsed}   ID: {e.ID} move DONE Code : {(MotorErrorCode)e.Status}" );
       MotorYDone = true;
 
       if( MotorXDone && MotorYDone && MotorZDone ) { _waitHandle.Set(); }
     }
     void MotorZMoveDoneCallback( object sender, MotorMoveDoneEventArgs e )
     {
-      Console.WriteLine( $"{GetTimestamp( DateTime.Now )}   ID: {e.ID} move DONE Code : {(MotorErrorCode)e.Status}" );
+      Console.WriteLine( $"{s.Elapsed}   ID: {e.ID} move DONE Code : {(MotorErrorCode)e.Status}" );
       MotorZDone = true;
 
       if( MotorXDone && MotorYDone && MotorZDone ) { _waitHandle.Set(); }
     }
 
 
-
-
-
-
-
     // MAIN
     IMotor MotorX, MotorY, MotorZ;
     bool MotorXDone, MotorYDone, MotorZDone;
     public static AutoResetEvent _waitHandle = new AutoResetEvent( false );
-
-    public static String GetTimestamp( DateTime value )
-    {
-      return value.ToString( "mm:ss:fff" );
-    }
+    public static Stopwatch s = Stopwatch.StartNew();
+    CancellationTokenSource _tokenSource = new CancellationTokenSource();
+    public static CancellationToken Token;
 
     public Actuator3Axis( IMotor motorX, IMotor motorY, IMotor motorZ )
     {
@@ -72,7 +64,9 @@ namespace MotorSimulation
       MotorY.AddEventMoveDone( MoveDoneCallback );
       MotorZ.AddEventMoveDone( MoveDoneCallback );
 
+      Token = _tokenSource.Token;
 
+      var tCancel = Task.Run( () => Cancellation() );
     }
 
     public void MoveThread( int x, int y, int z )
@@ -94,31 +88,48 @@ namespace MotorSimulation
       Console.WriteLine( $"MOVE TO {x}, {y}, {z}" );
       int safeZ = 10;
 
-      Console.WriteLine( $"RETRACT Z to {safeZ}" );
+      Console.WriteLine( $"retract z to {safeZ}" );
       var t1 = Task.Run( () => MotorZ.Move( safeZ ) );
       Task.WaitAll( t1 );
 
-      Console.WriteLine( $"MOVE XY to {x}, {y}" );
+      Console.WriteLine( $"move xy to {x}, {y}" );
       var t2 = Task.Run( () => MotorX.Move( x ) );
       var t3 = Task.Run( () => MotorY.Move( y ) );
       Task.WaitAll( t2, t3 );
 
-      Console.WriteLine( $"DROP Z to {z}" );
+      Console.WriteLine( $"drop z to {z}" );
       t1 = Task.Run( () => MotorZ.Move( z ) );
       Task.WaitAll( t1 );
     }
-
-    public async Task MoveAwaitAsync( int x, int y, int z ) 
-    { 
-      var tasks = new List<Task> { MoveXAsync(x), MoveYAsync( y ), MoveZAsync( z )};
+    public async Task MoveAwaitAsync( int x, int y, int z )
+    {
+      var tasks = new List<Task> { MoveXAsync( x ), MoveYAsync( y ), MoveZAsync( z ) };
       await Task.WhenAll( tasks );
     }
-
     public async Task MoveXAsync( int i ) { await Task.Run( () => MotorX.Move( i ) ); }
     public async Task MoveYAsync( int i ) { await Task.Run( () => MotorY.Move( i ) ); }
     public async Task MoveZAsync( int i ) { await Task.Run( () => MotorZ.Move( i ) ); }
 
-    
+
+    //BIKIN MOVEWITHCANCELLATION
+    public void MoveWCancellation( int x, int y, int z )
+    {
+      if( Token.IsCancellationRequested ) { return; }
+      Console.WriteLine( $"MOVE TO {x}, {y}, {z}" );
+
+      var t1 = Task.Run( () => MotorX.MoveWCancellation( x, Token ) );
+      var t2 = Task.Run( () => MotorY.MoveWCancellation( y, Token ) );
+      var t3 = Task.Run( () => MotorZ.MoveWCancellation( z, Token ) );
+
+      Task.WaitAll( t1, t2, t3 );
+    }
+    void Cancellation()
+    {
+      Console.WriteLine( "PRESS ENTER TO ABORT" );
+      Console.ReadLine();
+      _tokenSource.Cancel();
+      Console.WriteLine( "ABORTED BY USER" );
+    }
 
   }
 }

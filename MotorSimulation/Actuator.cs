@@ -22,10 +22,7 @@ namespace MotorSimulation
     // MAIN
     IMotor Motor;
     public static Stopwatch s = Stopwatch.StartNew();
-    public static String GetTimestamp( DateTime value )
-    {
-      return value.ToString( "mm:ss:fff" );
-    }
+    
     public Actuator( IMotor motor )
     {
 
