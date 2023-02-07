@@ -27,9 +27,12 @@ namespace MotorSimulation
       //actuator1.Move( 3 );
       //actuator1.Move( -1 );
 
-      var actuator3axis = new Actuator3Axis( new MotorVendorA( "MotorX", 500, 0, 10 ),
-                                             new MotorVendorA( "MotorY", 500, 0, 10 ),
-                                             new MotorVendorA( "MotorZ", 500, 0, 10 ) );
+
+
+      //var actuator3axis = new Actuator3Axis( new MotorVendorA( "MotorX", 500, 0, 10 ),
+      //                                       new MotorVendorA( "MotorY", 500, 0, 10 ),
+      //                                       new MotorVendorA( "MotorZ", 500, 0, 10 ) );
+
       //actuator3axis.MoveThread( 3, 3, 3 );
       //actuator3axis.MoveThread( 7, 7, 7 );
       //actuator3axis.MoveThread( 1, 1, 1 );
@@ -38,19 +41,20 @@ namespace MotorSimulation
       //actuator3axis.MoveTask( 7, 7, 7 );
       //actuator3axis.MoveTask( 1, 1, 1 );
 
-      // Ubah method main void ke async Task
+      // TO USE : change void to async Task in Main method
       //await actuator3axis.MoveAwaitAsync( 3, 3, 3 );
       //await actuator3axis.MoveAwaitAsync( 7, 7, 7 );
       //await actuator3axis.MoveAwaitAsync( 1, 1, 1 );
 
-      actuator3axis.MoveWCancellation( 3, 3, 3 );
-      actuator3axis.MoveWCancellation( 7, 7, 7 );
-      actuator3axis.MoveWCancellation( 1, 1, 1 );
-      actuator3axis.MoveWCancellation( 9, 9, 9 );
-      actuator3axis.MoveWCancellation( 1, 1, 1 );
-      actuator3axis.MoveWCancellation( 10, 10, 10 );
+      //actuator3axis.MoveWCancellation( 3, 3, 3 );
+      //actuator3axis.MoveWCancellation( 7, 7, 7 );
+      //actuator3axis.MoveWCancellation( 1, 1, 1 );
 
-      Console.WriteLine( "END" );
+      //Console.WriteLine( "END" );
+
+      ReadFromFile.MoveWithFile(  "D:\\MotorSimulation\\MotorSimulation\\ExampleFile.txt" );
+
+      
       Console.ReadLine();
     }
   }

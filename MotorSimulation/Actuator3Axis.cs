@@ -114,14 +114,25 @@ namespace MotorSimulation
     //BIKIN MOVEWITHCANCELLATION
     public void MoveWCancellation( int x, int y, int z )
     {
+      int safeZ = 10;
+
       if( Token.IsCancellationRequested ) { return; }
       Console.WriteLine( $"MOVE TO {x}, {y}, {z}" );
 
-      var t1 = Task.Run( () => MotorX.MoveWCancellation( x, Token ) );
-      var t2 = Task.Run( () => MotorY.MoveWCancellation( y, Token ) );
-      var t3 = Task.Run( () => MotorZ.MoveWCancellation( z, Token ) );
+      Console.WriteLine( $"retract z to {safeZ}" );
+      var t1 = Task.Run( () => MotorZ.MoveWCancellation( safeZ, Token ) );
+      Task.WaitAll( t1 );
+      if( Token.IsCancellationRequested ) { return; }
+      Console.WriteLine( $"move xy to {x}, {y}" );
+      var t2 = Task.Run( () => MotorX.MoveWCancellation( x, Token ) );
+      var t3 = Task.Run( () => MotorY.MoveWCancellation( y, Token ) );
+      Task.WaitAll( t2, t3 );
+      if( Token.IsCancellationRequested ) { return; }
+      Console.WriteLine( $"drop z to {z}" );
+      t1 = Task.Run( () => MotorZ.MoveWCancellation( z, Token ) );
+      Task.WaitAll( t1 );
 
-      Task.WaitAll( t1, t2, t3 );
+
     }
     void Cancellation()
     {

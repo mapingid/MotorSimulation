@@ -35,6 +35,9 @@ namespace MotorSimulation
       MoveArgs.ID = ID;
     }
 
+    public void SetSpeed( int speed )
+    { Speed = speed; }
+    
     public void Move( int goalPosition )
     {
       int MaxStep = Math.Abs( goalPosition - CurrentPosition );

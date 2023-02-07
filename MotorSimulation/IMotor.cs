@@ -24,5 +24,7 @@ namespace MotorSimulation
     
     void Move( int goalPosition );
     void MoveWCancellation(int goalPosition, CancellationToken token);
+
+    void SetSpeed( int speed );
   }
 }
