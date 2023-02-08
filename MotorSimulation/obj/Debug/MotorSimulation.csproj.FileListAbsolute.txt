@@ -1,8 +1,0 @@
-D:\MotorSimulation\MotorSimulation\bin\Debug\MotorSimulation.exe.config
-D:\MotorSimulation\MotorSimulation\bin\Debug\MotorSimulation.exe
-D:\MotorSimulation\MotorSimulation\bin\Debug\MotorSimulation.pdb
-D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.csproj.AssemblyReference.cache
-D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.csproj.CoreCompileInputs.cache
-D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.exe
-D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.pdb
-D:\MotorSimulation\MotorSimulation\obj\Debug\MotorSimulation.csproj.SuggestedBindingRedirects.cache

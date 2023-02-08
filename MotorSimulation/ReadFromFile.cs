@@ -9,15 +9,6 @@ namespace MotorSimulation
 {
   class ReadFromFile
   {
-    
-    Actuator3Axis Actuator;
-
-    public ReadFromFile()
-    {
-      Actuator = new Actuator3Axis( new MotorVendorA( "MotorX", 500, 0, 10 ),
-                                    new MotorVendorA( "MotorY", 500, 0, 10 ),
-                                    new MotorVendorA( "MotorZ", 500, 0, 10 ) );
-    }
     public static void WriteCommand( string gcode, int x, int y, int z, int f )
     {
       FileStream fs = new FileStream( "D:\\MotorSimulation\\MotorSimulation\\ExampleFile.txt", FileMode.Append );
@@ -55,17 +46,15 @@ namespace MotorSimulation
       {
         string[] buffer = code.Split( ' ' ).ToArray();
         
-        Console.WriteLine(buffer[4][1..] );
+        string gcode = buffer[0];
+        int x = Int16.Parse( buffer[1][1..] );
+        int y = Int16.Parse( buffer[2][1..] );
+        int z = Int16.Parse( buffer[3][1..] );
+        int f = Int16.Parse( buffer[4][1..] );
 
-
-        //string gcode = buffer[0];
-        //int x = Int16.Parse( buffer[1] );
-        //int y = Int16.Parse( buffer[2] );
-        //int z = Int16.Parse( buffer[3] );
-        //int f = Int16.Parse( buffer[4] );
-      
-      
+        Console.WriteLine($"{gcode} {x} {y} {z} {f}");
       }
+      fs.Close();
     }
 
   }

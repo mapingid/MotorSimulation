@@ -101,6 +101,7 @@ namespace MotorSimulation
       t1 = Task.Run( () => MotorZ.Move( z ) );
       Task.WaitAll( t1 );
     }
+    
     public async Task MoveAwaitAsync( int x, int y, int z )
     {
       var tasks = new List<Task> { MoveXAsync( x ), MoveYAsync( y ), MoveZAsync( z ) };
@@ -111,7 +112,7 @@ namespace MotorSimulation
     public async Task MoveZAsync( int i ) { await Task.Run( () => MotorZ.Move( i ) ); }
 
 
-    //BIKIN MOVEWITHCANCELLATION
+    //MOVEWITHCANCELLATION
     public void MoveWCancellation( int x, int y, int z )
     {
       int safeZ = 10;

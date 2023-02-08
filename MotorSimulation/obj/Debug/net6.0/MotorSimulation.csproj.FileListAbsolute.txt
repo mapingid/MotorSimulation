@@ -1,0 +1,15 @@
+D:\MotorSimulation\MotorSimulation\bin\Debug\net6.0\MotorSimulation.exe
+D:\MotorSimulation\MotorSimulation\bin\Debug\net6.0\MotorSimulation.deps.json
+D:\MotorSimulation\MotorSimulation\bin\Debug\net6.0\MotorSimulation.runtimeconfig.json
+D:\MotorSimulation\MotorSimulation\bin\Debug\net6.0\MotorSimulation.dll
+D:\MotorSimulation\MotorSimulation\bin\Debug\net6.0\MotorSimulation.pdb
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\MotorSimulation.csproj.AssemblyReference.cache
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\MotorSimulation.GeneratedMSBuildEditorConfig.editorconfig
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\MotorSimulation.AssemblyInfoInputs.cache
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\MotorSimulation.AssemblyInfo.cs
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\MotorSimulation.csproj.CoreCompileInputs.cache
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\MotorSimulation.dll
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\refint\MotorSimulation.dll
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\MotorSimulation.pdb
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\MotorSimulation.genruntimeconfig.cache
+D:\MotorSimulation\MotorSimulation\obj\Debug\net6.0\ref\MotorSimulation.dll
